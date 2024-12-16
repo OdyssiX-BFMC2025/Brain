@@ -1,0 +1,6 @@
+docs/build/
+.vscode/
+__pycache__
+**/*.pyc
+/src/dashboard/frontend/node_modules
+venv/
