@@ -139,7 +139,7 @@ if AutoStart:
     print("Command sent to serial --------------------> engine started")
     command = {
     "action": "vcd",
-    "speed": 20,  # Example value for speed
+    "speed": 0,  # Example value for speed
     "steer": 20,  # Example value for steer
     "time": 1000   # Example value for time
     }
