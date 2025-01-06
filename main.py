@@ -84,7 +84,7 @@ TrafficCommunication = True
 SerialHandler = True
 
 # ------ New component flags starts here ------#
-AutoStart = True
+AutoStart = False
 # ------ New component flags ends here ------#
 
 # ===================================== SETUP PROCESSES ==================================

@@ -148,11 +148,11 @@ class threadCamera(ThreadWithStop):
             except Exception as e:
                 print(e)
             #changed
-            try:
-                command = {"action": "kl", "mode": 30}
-                threadWrite.sendToSerial(command)
-            except Exception as e:
-                print(e)
+            #try:
+            #    command = {"action": "kl", "mode": 30}
+            #    threadWrite.sendToSerial(command)
+            #except Exception as e:
+            #    print(e)
 
             if send:
                 mainRequest = self.camera.capture_array("main")
