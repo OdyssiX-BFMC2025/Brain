@@ -178,7 +178,7 @@ class processDashboard(WorkerProcess):
 
     def handleLoadTableState(self, data):
         """Handle loading the table state from a JSON file."""
-        file_path = '/home/jesus/Brain/src/utils/table_state.json'  # change as necessary
+        file_path = '/home/jesus/Brain/src/utils/table_state.json'  # change as necessary (jesus)
 
         try:
             with open(file_path, 'r') as json_file:
