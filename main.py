@@ -63,6 +63,7 @@ from src.utils.ipManager.IpReplacement import IPManager
 # ------ New component imports starts here ------#
 from src.hardware.serialhandler.threads.threadWrite import threadWrite
 import serial
+logFile = 'logfile.log'
 # ------ New component imports ends here ------#
 # ======================================== SETTING UP ====================================
 allProcesses = list()
@@ -134,7 +135,7 @@ if AutoStart:
 
     # Instantiate the serial connection and the thread write handler
     serialCom = serial.Serial("/dev/ttyACM0", 115200, timeout=0.1)
-    threadWrite = threadWrite(serialCom)
+    threadWrite = threadWrite(queueList, serialCom, logFile, logging)
 
     # Define your command
     command = {
