@@ -124,8 +124,16 @@ if SerialHandler:
 
 # ------ New component runs starts here ------#
 if AutoStart:
+    # Initialize the processSerialHandler
+    # serialHandler = processSerialHandler(queueList, logging, debugging=True)
+    thread_writer = threadWrite(queueList, 0, None, logging, debugger=True)
+    # Access the threadWrite from the processSerialHandler
+    # This assumes that the threadWrite is already initialized within the processSerialHandler class.
+    # thread_writer = serialHandler.threads[1]  # threadWrite is the second thread in the threads list
+
+    # Send the auto-start command
     command = {"action": "kl", "mode": 30}
-    threadWrite.sendToSerial(command)
+    thread_writer.sendToSerial(command)
 # ------ New component runs ends here ------#
 
 # ===================================== START PROCESSES ==================================
