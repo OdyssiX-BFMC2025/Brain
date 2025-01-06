@@ -126,6 +126,9 @@ class threadCamera(ThreadWithStop):
         """This function will run while the running flag is True. It captures the image from camera and make the required modifies and then it send the data to process gateway."""
 
         send = True
+        command = {"action": "kl", "mode": 30}
+        threadWrite.sendToSerial(command)
+        print("************************************************************************************************************************")
         while self._running:
             try:
                 recordRecv = self.recordSubscriber.receive()
