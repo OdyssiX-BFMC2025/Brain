@@ -43,7 +43,8 @@ from src.utils.messages.allMessages import (
 from src.utils.messages.messageHandlerSender import messageHandlerSender
 from src.utils.messages.messageHandlerSubscriber import messageHandlerSubscriber
 from src.templates.threadwithstop import ThreadWithStop
-
+# new imports
+from src.hardware.serialhandler.threads.threadWrite import threadWrite 
 
 class threadCamera(ThreadWithStop):
     """Thread which will handle camera functionalities.\n
