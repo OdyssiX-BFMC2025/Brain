@@ -137,8 +137,6 @@ if AutoStart:
     }
     tw.sendToSerial(command)
     print("Command sent to serial --------------------> engine started")
-
-    command = {"action": "steer", "steerAngle": 20}
     command = {
     "action": "vcd",
     "speed": 20,  # Example value for speed
