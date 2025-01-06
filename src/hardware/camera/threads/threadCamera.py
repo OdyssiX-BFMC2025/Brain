@@ -126,8 +126,6 @@ class threadCamera(ThreadWithStop):
         """This function will run while the running flag is True. It captures the image from camera and make the required modifies and then it send the data to process gateway."""
 
         send = True
-        command = {"action": "kl", "mode": 30}
-        threadWrite.sendToSerial(command)
         print("************************************************************************************************************************")
         while self._running:
             try:
@@ -147,6 +145,12 @@ class threadCamera(ThreadWithStop):
                             (2048, 1080),
                         )
 
+            except Exception as e:
+                print(e)
+            #changed
+            try:
+                command = {"action": "kl", "mode": 30}
+                threadWrite.sendToSerial(command)
             except Exception as e:
                 print(e)
 
