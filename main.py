@@ -43,6 +43,8 @@
 import sys
 import subprocess
 
+from hardware.serialhandler.threads.threadWrite import threadWrite
+
 sys.path.append(".")
 from multiprocessing import Queue, Event
 import logging
@@ -80,7 +82,7 @@ TrafficCommunication = True
 SerialHandler = True
 
 # ------ New component flags starts here ------#
- 
+AutoStart = True
 # ------ New component flags ends here ------#
 
 # ===================================== SETUP PROCESSES ==================================
@@ -121,7 +123,9 @@ if SerialHandler:
     allProcesses.append(processSerialHandler)
 
 # ------ New component runs starts here ------#
- 
+if AutoStart:
+    command = {"action": "kl", "mode": 30}
+    threadWrite.sendToSerial(command)
 # ------ New component runs ends here ------#
 
 # ===================================== START PROCESSES ==================================
