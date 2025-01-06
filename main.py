@@ -126,13 +126,6 @@ if SerialHandler:
 
 # ------ New component runs starts here ------#
 if AutoStart:
-    # Initialize the processSerialHandler
-    # serialHandler = processSerialHandler(queueList, logging, debugging=True)
-    # thread_writer = threadWrite(queueList, serialHandler.serialCom, None, logging, debugger=True)
-    # Access the threadWrite from the processSerialHandler
-    # This assumes that the threadWrite is already initialized within the processSerialHandler class.
-    #thread_writer = serialHandler.threads[1]  # threadWrite is the second thread in the threads list
-
     # Instantiate the serial connection and the thread write handler
     serialCom = serial.Serial("/dev/ttyACM0", 115200, timeout=0.1)
     tw = threadWrite(queueList, serialCom, logFile, logging)
