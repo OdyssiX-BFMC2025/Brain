@@ -75,7 +75,7 @@ logging = logging.getLogger()
 
 Dashboard = True
 Camera = True
-Semaphores = True
+Semaphores = False
 TrafficCommunication = False
 SerialHandler = True
 
