@@ -62,6 +62,7 @@ from src.data.TrafficCommunication.processTrafficCommunication import processTra
 from src.utils.ipManager.IpReplacement import IPManager
 # ------ New component imports starts here ------#
 from src.hardware.serialhandler.threads.threadWrite import threadWrite
+import serial
 # ------ New component imports ends here ------#
 # ======================================== SETTING UP ====================================
 allProcesses = list()
@@ -125,15 +126,22 @@ if SerialHandler:
 # ------ New component runs starts here ------#
 if AutoStart:
     # Initialize the processSerialHandler
-    serialHandler = processSerialHandler(queueList, logging, debugging=True)
-    thread_writer = threadWrite(queueList, serialHandler.serialCom, None, logging, debugger=True)
+    # serialHandler = processSerialHandler(queueList, logging, debugging=True)
+    # thread_writer = threadWrite(queueList, serialHandler.serialCom, None, logging, debugger=True)
     # Access the threadWrite from the processSerialHandler
     # This assumes that the threadWrite is already initialized within the processSerialHandler class.
     #thread_writer = serialHandler.threads[1]  # threadWrite is the second thread in the threads list
 
-    # Send the auto-start command
-    command = {"action": "kl", "mode": 30}
-    thread_writer.sendToSerial(command)
+    # Instantiate the serial connection and the thread write handler
+    serialCom = serial.Serial("/dev/ttyACM0", 115200, timeout=0.1)
+    threadWrite = threadWrite(serialCom)
+
+    # Define your command
+    command = {
+        "action": "kl",
+        "mode": 30
+    }
+
 # ------ New component runs ends here ------#
 
 # ===================================== START PROCESSES ==================================
