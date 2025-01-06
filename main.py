@@ -43,7 +43,7 @@
 import sys
 import subprocess
 
-from hardware.serialhandler.threads.threadWrite import threadWrite
+
 
 sys.path.append(".")
 from multiprocessing import Queue, Event
@@ -61,7 +61,7 @@ from src.data.Semaphores.Semaphores import processSemaphores
 from src.data.TrafficCommunication.processTrafficCommunication import processTrafficCommunication
 from src.utils.ipManager.IpReplacement import IPManager
 # ------ New component imports starts here ------#
-
+from src.hardware.serialhandler.threads.threadWrite import threadWrite
 # ------ New component imports ends here ------#
 # ======================================== SETTING UP ====================================
 allProcesses = list()
