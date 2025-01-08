@@ -103,6 +103,9 @@ class threadWrite(ThreadWithStop):
         if command_msg != "error":
             self.serialCom.write(command_msg.encode("ascii"))
             self.logFile.write(command_msg)
+            print("debug message ---> data send from to the serial port: ", command_msg)
+        else:
+            print("error in the command sending ************************************************")
 
     def loadConfig(self, configType):
         with open(self.configPath, "r") as file:

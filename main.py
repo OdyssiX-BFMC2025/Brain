@@ -80,7 +80,7 @@ logging = logging.getLogger()
 Dashboard = True
 Camera = True
 Semaphores = True
-TrafficCommunication = True
+TrafficCommunication = False
 SerialHandler = True
 
 # ------ New component flags starts here ------#
@@ -140,8 +140,8 @@ if AutoStart:
     command = {
     "action": "vcd",
     "speed": 30,  # Example value for speed
-    "steer": 20,  # Example value for steer
-    "time": 1000   # Example value for time
+    "steer": -20,  # Example value for steer
+    "time": 100   # Example value for time
     }
 
     tw.sendToSerial(command)
