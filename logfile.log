@@ -28,3 +28,6 @@
 #kl:30;;
 #batteryCapacity:9000;;
 #kl:30;;
+#batteryCapacity:9000;;
+#kl:30;;
+#vcd:30;-20;100;;
