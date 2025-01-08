@@ -43,6 +43,8 @@
 import sys
 import subprocess
 
+import command_sender
+
 
 
 sys.path.append(".")
@@ -84,7 +86,7 @@ TrafficCommunication = False
 SerialHandler = True
 
 # ------ New component flags starts here ------#
-AutoStart = False
+AutoStart = True
 # ------ New component flags ends here ------#
 
 # ===================================== SETUP PROCESSES ==================================
@@ -127,25 +129,9 @@ if SerialHandler:
 # ------ New component runs starts here ------#
 if AutoStart:
     # Instantiate the serial connection and the thread write handler
-    serialCom = serial.Serial("/dev/ttyACM0", 115200, timeout=0.1)
-    tw = threadWrite(queueList, serialCom, logFile, logging)
+    command_sender.send_commands_continuously(queueList, logFile, logging)
 
-    # Define your command
-    command = {
-        "action": "kl",
-        "mode": 30
-    }
-    tw.sendToSerial(command)
-    print("Command sent to serial --------------------> engine started")
-    command = {
-    "action": "vcd",
-    "speed": 30,  # Example value for speed
-    "steer": -20,  # Example value for steer
-    "time": 100   # Example value for time
-    }
-
-    tw.sendToSerial(command)
-    print("Command sent to serial --------------------> steering worksss!!!!!!!!!!!!!!")
+    
 # ------ New component runs ends here ------#
 
 # ===================================== START PROCESSES ==================================
