@@ -148,4 +148,5 @@ class LaneDetection:
                     self.logger.error(f"Error in lane detection: {e}")
             else:
                 if self.debugger:
+                    print("No new image data received.")
                     self.logger.info("No new image data received.")
