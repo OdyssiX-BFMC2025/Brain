@@ -17,7 +17,7 @@ class LaneDetection:
         self.logger = logger
         # self.logger = logging.getLogger("LaneDetection")
         self.serialCom = serial.Serial("/dev/ttyACM0", 115200, timeout=0.1)
-        self.logFile = open('../../logfile.log', 'a')
+        self.logFile = open('../logfile.log', 'a')
         tw = threadWrite(self.queueList, self.serialCom, self.logFile, logging)
         
         # Subscribe to mainCamera messages
