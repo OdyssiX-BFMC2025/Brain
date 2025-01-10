@@ -11,7 +11,7 @@ import time
 from src.hardware.serialhandler.threads.threadWrite import threadWrite
 
 class LaneDetection:
-    def init(self, queuesList, logger, debug=False):
+    def __init__(self, queuesList, logger, debug=False):
         self.queuesList = queuesList
         self.debugger = debug
         self.logger = logger
