@@ -133,8 +133,9 @@ if AutoStart:
     command_sender.send_commands_continuously(queueList, logFile, logging)
 
 if lanedetection:
-    
-
+    lanedetection = lanedetection(queueList, debugging = False)
+    print("setting lanedetection to run")
+    lanedetection.run()
     
 # ------ New component runs ends here ------#
 
