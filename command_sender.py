@@ -12,25 +12,26 @@ def send_commands_continuously(queueList, logFile, logging):
         "action": "kl",
         "mode": 30
     }
+    
     tw.sendToSerial(command)
+    print("kl 30 Command sent.")
+    # # Define the command
+    # command = {
+    #     "action": "vcd",
+    #     "speed": 30,  # Example value for speed
+    #     "steer": -20,  # Example value for steer
+    #     "time": 100    # Example value for time
+    # }
 
-    # Define the command
-    command = {
-        "action": "vcd",
-        "speed": 30,  # Example value for speed
-        "steer": -20,  # Example value for steer
-        "time": 100    # Example value for time
-    }
-
-    # Continuous loop to send the command
-    try:
-        while True:
-            tw.sendToSerial(command)
-            time.sleep(0.1)  # Adjust the interval between sending commands if needed
-    except KeyboardInterrupt:
-        print("Command sending stopped by user.")
-    finally:
-        serialCom.close()
+    # # Continuous loop to send the command
+    # try:
+    #     while True:
+    #         tw.sendToSerial(command)
+    #         time.sleep(0.1)  # Adjust the interval between sending commands if needed
+    # except KeyboardInterrupt:
+    #     print("Command sending stopped by user.")
+    # finally:
+    #     serialCom.close()
 
 # Ensure the script can be called directly if needed
 if __name__ == "__main__":

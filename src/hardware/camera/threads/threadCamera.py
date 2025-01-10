@@ -74,7 +74,7 @@ class threadCamera(ThreadWithStop):
         self.Queue_Sending()
         self.Configs()
 
-    def subscribe(self):
+    def subscribe(self):    
         """Subscribe function. In this function we make all the required subscribe to process gateway"""
 
         self.recordSubscriber = messageHandlerSubscriber(self.queuesList, Record, "lastOnly", True)
