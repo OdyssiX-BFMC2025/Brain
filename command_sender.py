@@ -17,8 +17,8 @@ def send_commands_continuously(queueList, logFile, logging):
     # Define the command
     command = {
         "action": "vcd",
-        "speed": 30,  # Example value for speed
-        "steer": -20,  # Example value for steer
+        "speed": 300,  # Example value for speed
+        "steer": 0,  # Example value for steer
         "time": 100    # Example value for time
     }
 
