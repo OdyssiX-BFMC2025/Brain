@@ -100,6 +100,7 @@ class LaneDetection:
         """Main loop for processing frames."""
         while True:
             image_data = self.mainCameraSubscriber.receive()
+            print("we are inside the run function")
             if image_data:
                 try:
                     frame = self.decode_image(image_data)
