@@ -144,6 +144,7 @@ class LaneDetection:
                     # Optional: Save processed frame
                     # cv2.imwrite("output_frame.jpg", processed_frame)
                 except Exception as e:
+                    print("Error in lane detection:", e)
                     self.logger.error(f"Error in lane detection: {e}")
             else:
                 if self.debugger:
