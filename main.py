@@ -134,7 +134,7 @@ if AutoStart:
     command_sender.send_commands_continuously(queueList, logFile, logging)
 
 if autolane:
-    lanedetection = LaneDetection(queueList, debugging = False)
+    lanedetection = LaneDetection(queueList, logging, debug = False)
     print("setting lanedetection to run")
     lanedetection.run()
     

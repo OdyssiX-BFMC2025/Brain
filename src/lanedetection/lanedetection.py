@@ -11,10 +11,11 @@ import time
 from src.hardware.serialhandler.threads.threadWrite import threadWrite
 
 class LaneDetection:
-    def init(self, queuesList, debug=False):
+    def init(self, queuesList, logger, debug=False):
         self.queuesList = queuesList
         self.debugger = debug
-        self.logger = logging.getLogger("LaneDetection")
+        self.logger = logger
+        # self.logger = logging.getLogger("LaneDetection")
         self.serialCom = serial.Serial("/dev/ttyACM0", 115200, timeout=0.1)
         self.logFile = open('../../logfile.log', 'a')
         tw = threadWrite(self.queueList, self.serialCom, self.logFile, logging)
