@@ -44,7 +44,7 @@ import sys
 import subprocess
 
 import command_sender
-from src.lanedetection import LaneDetection
+from src.lanedetection.lanedetection import LaneDetection
 
 
 
