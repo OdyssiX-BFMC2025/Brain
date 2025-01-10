@@ -44,6 +44,7 @@ import sys
 import subprocess
 
 import command_sender
+from src.lanedetection import LaneDetection
 
 
 
@@ -133,7 +134,11 @@ if AutoStart:
     command_sender.send_commands_continuously(queueList, logFile, logging)
 
 if autolane:
+<<<<<<< HEAD
     lanedetection = lanedetection(queueList, debugging = False)
+=======
+    lanedetection = LaneDetection(queueList, debugging = False)
+>>>>>>> 08e37635aa833cf5ed8590d9cb44194cfc6f16d0
     print("setting lanedetection to run")
     lanedetection.run()
     
