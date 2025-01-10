@@ -87,7 +87,7 @@ SerialHandler = True
 
 # ------ New component flags starts here ------#
 AutoStart = True
-lanedetection = True
+autolane = True
 # ------ New component flags ends here ------#
 
 # ===================================== SETUP PROCESSES ==================================
@@ -132,7 +132,7 @@ if AutoStart:
     # Instantiate the serial connection and the thread write handler
     command_sender.send_commands_continuously(queueList, logFile, logging)
 
-if lanedetection:
+if autolane:
     lanedetection = lanedetection(queueList, debugging = False)
     print("setting lanedetection to run")
     lanedetection.run()
