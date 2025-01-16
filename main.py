@@ -110,7 +110,7 @@ if Dashboard:
 
 # Initializing camera
 if Camera:
-    processCamera = processCamera(queueList, logging , debugging = False)
+    processCamera = processCamera(queueList, logging , debugging = True)
     allProcesses.append(processCamera)
 
 # Initializing semaphores
