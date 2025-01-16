@@ -150,3 +150,4 @@ class LaneDetection:
             else:
                 print("No new image data received.")
                 self.logger.info("No new image data received.")
+                break
