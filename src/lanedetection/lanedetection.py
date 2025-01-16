@@ -14,14 +14,14 @@ from src.hardware.serialhandler.threads.threadWrite import threadWrite
 from src.utils.messages import allMessages
 
 class LaneDetection:
-    def __init__(self, queuesList, logger, debug=False):
-        self.queuesList = queuesList
+    def __init__(self, queueList, logger, debug=False):
+        self.queueList = queueList
         self.debugger = debug
         self.logger = logger
         # self.logger = logging.getLogger("LaneDetection")
         self.serialCom = serial.Serial("/dev/ttyACM0", 115200, timeout=0.1)
         self.logFile = open('../logfile.log', 'a')
-        tw = threadWrite(self.queuesList, self.serialCom, self.logFile, logging)
+        tw = threadWrite(self.queueList, self.serialCom, self.logFile, logging)
 
         self.messages = {}
         self.messagesAndVals = {}
@@ -33,7 +33,7 @@ class LaneDetection:
 
         # Subscribe to mainCamera messages
         self.mainCameraSubscriber = messageHandlerSubscriber(
-            queuesList=self.queuesList,
+            queueList=self.queueList,
             message=serialCamera, 
             deliveryMode="lastonly",
             subscribe=True
