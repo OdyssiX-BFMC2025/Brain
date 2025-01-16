@@ -23,7 +23,7 @@ class LaneDetection:
         # Subscribe to mainCamera messages
         self.mainCameraSubscriber = messageHandlerSubscriber(
             queuesList=self.queuesList,
-            message=serialCamera, 
+            message=mainCamera, 
             deliveryMode="lastonly",
             subscribe=True
         )
