@@ -4,11 +4,14 @@ import numpy as np
 import base64
 import logging
 import time
+import psutil, json, logging, inspect, eventlet
 from src.utils.messages.messageHandlerSubscriber import messageHandlerSubscriber
 from src.utils.messages.allMessages import mainCamera, Record, serialCamera
 import serial
+from enum import Enum
 import time
 from src.hardware.serialhandler.threads.threadWrite import threadWrite
+from src.utils.messages import allMessages
 
 class LaneDetection:
     def __init__(self, queuesList, logger, debug=False):
@@ -19,7 +22,15 @@ class LaneDetection:
         self.serialCom = serial.Serial("/dev/ttyACM0", 115200, timeout=0.1)
         self.logFile = open('../logfile.log', 'a')
         tw = threadWrite(self.queuesList, self.serialCom, self.logFile, logging)
-        
+
+        self.messages = {}
+        self.messagesAndVals = {}
+
+        self.getNamesAndVals()
+        self.messagesAndVals.pop("mainCamera", None)
+        self.messagesAndVals.pop("Semaphores", None)
+        self.subscribe()
+
         # Subscribe to mainCamera messages
         self.mainCameraSubscriber = messageHandlerSubscriber(
             queuesList=self.queuesList,
@@ -27,8 +38,20 @@ class LaneDetection:
             deliveryMode="lastonly",
             subscribe=True
         )
-    
 
+    def getNamesAndVals(self):
+        """Extract all message names and values for processing."""
+        classes = inspect.getmembers(allMessages, inspect.isclass)
+        for name, cls in classes:
+            if name != "Enum" and issubclass(cls, Enum):
+                self.messagesAndVals[name] = {"enum": cls, "owner": cls.Owner.value}
+
+    def subscribe(self):
+        """Subscribe function. In this function we make all the required subscribe to process gateway"""
+        for name, enum in self.messagesAndVals.items():
+            subscriber = messageHandlerSubscriber(self.queueList, enum["enum"], "lastOnly", True)
+            self.messages[name] = {"obj": subscriber}
+                     
     def decode_image(self, encoded_image):
         """Decodes a base64-encoded image."""
         decoded_bytes = base64.b64decode(encoded_image)
@@ -98,56 +121,58 @@ class LaneDetection:
 
     def run(self):
         """Main loop for processing frames."""
-        while True:
-            image_data = self.mainCameraSubscriber.receive()
-            print("we are inside the run function", image_data)
-            if image_data:
-                print("Looping \n")
-                try:
-                    frame = self.decode_image(image_data)
-                    processed_frame = self.process_frame(frame)
+        # while True:
+            # image_data = self.mainCameraSubscriber.receive()
+        image_data = self.messages
+        print(image_data)
+            # print("we are inside the run function", image_data)
+            # if image_data:
+            #     print("Looping \n")
+            #     try:
+            #         frame = self.decode_image(image_data)
+            #         processed_frame = self.process_frame(frame)
                     
-                    centervalue=self.calculate_lane_center(processed_frame)
+            #         centervalue=self.calculate_lane_center(processed_frame)
                     
-                    if 250<=centervalue<=400:
-                        command = {
-                            "action": "vcd",
-                            "speed": 20,
-                            "steer": 0,
-                            "time": 10
-                        }
-                        self.tw.sendToSerial(command)
-                        print('centervalue', centervalue)
-                        print("going straight*******") 
-                    elif 250>centervalue:
-                        command = {
-                            "action": "vcd",
-                            "speed": 10,
-                            "steer": -15,
-                            "time": 10
-                        }
-                        self.tw.sendToSerial(command)
-                        print('centervalue', centervalue)
-                        print("going left******") 
-                    elif centervalue>400:
-                        command = {
-                            "action": "vcd",
-                            "speed": 10,
-                            "steer": 15,
-                            "time": 10
-                        }
-                        self.tw.sendToSerial(command)
-                        print('centervalue', centervalue)
-                        print("going right******") 
-                    else:
-                        print("out of bounds********")
-                    # return centervalue
-                    # Optional: Save processed frame
-                    # cv2.imwrite("output_frame.jpg", processed_frame)
-                except Exception as e:
-                    print("Error in lane detection:", e)
-                    self.logger.error(f"Error in lane detection: {e}")
-            else:
-                print("No new image data received.")
-                self.logger.info("No new image data received.")
-                time.sleep(0.1)
+            #         if 250<=centervalue<=400:
+            #             command = {
+            #                 "action": "vcd",
+            #                 "speed": 20,
+            #                 "steer": 0,
+            #                 "time": 10
+            #             }
+            #             self.tw.sendToSerial(command)
+            #             print('centervalue', centervalue)
+            #             print("going straight*******") 
+            #         elif 250>centervalue:
+            #             command = {
+            #                 "action": "vcd",
+            #                 "speed": 10,
+            #                 "steer": -15,
+            #                 "time": 10
+            #             }
+            #             self.tw.sendToSerial(command)
+            #             print('centervalue', centervalue)
+            #             print("going left******") 
+            #         elif centervalue>400:
+            #             command = {
+            #                 "action": "vcd",
+            #                 "speed": 10,
+            #                 "steer": 15,
+            #                 "time": 10
+            #             }
+            #             self.tw.sendToSerial(command)
+            #             print('centervalue', centervalue)
+            #             print("going right******") 
+            #         else:
+            #             print("out of bounds********")
+            #         # return centervalue
+            #         # Optional: Save processed frame
+            #         # cv2.imwrite("output_frame.jpg", processed_frame)
+            #     except Exception as e:
+            #         print("Error in lane detection:", e)
+            #         self.logger.error(f"Error in lane detection: {e}")
+            # else:
+            #     print("No new image data received.")
+            #     self.logger.info("No new image data received.")
+            #     time.sleep(0.1)
