@@ -5,7 +5,7 @@ import base64
 import logging
 import time
 from src.utils.messages.messageHandlerSubscriber import messageHandlerSubscriber
-from src.utils.messages.allMessages import mainCamera
+from src.utils.messages.allMessages import mainCamera, Record
 import serial
 import time
 from src.hardware.serialhandler.threads.threadWrite import threadWrite
@@ -23,7 +23,7 @@ class LaneDetection:
         # Subscribe to mainCamera messages
         self.mainCameraSubscriber = messageHandlerSubscriber(
             queuesList=self.queuesList,
-            message=mainCamera, 
+            message=Record, 
             deliveryMode="lastonly",
             subscribe=True
         )
