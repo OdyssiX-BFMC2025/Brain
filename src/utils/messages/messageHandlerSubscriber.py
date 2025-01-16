@@ -60,7 +60,7 @@ class messageHandlerSubscriber:
         Returns None if there no data in the Pipe
         """
         if not self._pipeRecv.poll():
-            print("WARNING! No data in the pipe.", self._message, self._receiver)
+            # print("WARNING! No data in the pipe.", self._message, self._receiver)
             return None
         else:
             return self.receiveWithBlock()
