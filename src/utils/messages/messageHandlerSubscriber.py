@@ -63,6 +63,7 @@ class messageHandlerSubscriber:
             # print("WARNING! No data in the pipe.", self._message, self._receiver)
             return None
         else:
+            print("we have data*********************")
             return self.receiveWithBlock()
         
     def receiveWithBlock(self):
