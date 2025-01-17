@@ -51,6 +51,8 @@ class LaneDetection:
         for name, enum in self.messagesAndVals.items():
             subscriber = messageHandlerSubscriber(self.queueList, enum["enum"], "lastOnly", True)
             self.messages[name] = {"obj": subscriber}
+
+    # add a function that continuously recvs using the subscriber objects (inside message dict)
                      
     def decode_image(self, encoded_image):
         """Decodes a base64-encoded image."""
