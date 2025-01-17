@@ -31,13 +31,13 @@ class LaneDetection:
         self.messagesAndVals.pop("Semaphores", None)
         self.subscribe()
 
-        # Subscribe to mainCamera messages
-        self.mainCameraSubscriber = messageHandlerSubscriber(
-            queueList=self.queueList,
-            message=serialCamera, 
-            deliveryMode="lastonly",
-            subscribe=True
-        )
+        # # Subscribe to mainCamera messages
+        # self.mainCameraSubscriber = messageHandlerSubscriber(
+        #     queueList=self.queueList,
+        #     message=serialCamera, 
+        #     deliveryMode="lastonly",
+        #     subscribe=True
+        # )
 
     def getNamesAndVals(self):
         """Extract all message names and values for processing."""
