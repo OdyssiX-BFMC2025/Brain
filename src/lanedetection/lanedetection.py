@@ -27,8 +27,6 @@ class LaneDetection:
         self.messagesAndVals = {}
 
         self.getNamesAndVals()
-        self.messagesAndVals.pop("mainCamera", None)
-        self.messagesAndVals.pop("Semaphores", None)
         self.subscribe()
 
         # # Subscribe to mainCamera messages
@@ -43,7 +41,7 @@ class LaneDetection:
         """Extract all message names and values for processing."""
         classes = inspect.getmembers(allMessages, inspect.isclass)
         for name, cls in classes:
-            if name != "Enum" and issubclass(cls, Enum):
+            if name == "serialCamera" and issubclass(cls, Enum):
                 self.messagesAndVals[name] = {"enum": cls, "owner": cls.Owner.value}
 
     def subscribe(self):
@@ -51,6 +49,7 @@ class LaneDetection:
         for name, enum in self.messagesAndVals.items():
             subscriber = messageHandlerSubscriber(self.queueList, enum["enum"], "lastOnly", True)
             self.messages[name] = {"obj": subscriber}
+        print("added a subscribtion to : ", self.messages.keys(), "for lane detection.")
 
     # add a function that continuously recvs using the subscriber objects (inside message dict)
                      
@@ -123,10 +122,22 @@ class LaneDetection:
 
     def run(self):
         """Main loop for processing frames."""
+        # checking if we are able to recv images in here from the pipe.
+        print("turning on while loop of lane detection:")
+        while True:
+            image = self.messages[serialCamera]["obj"].receive()
+            
+            if image is not None:
+                print("*****image is not None!!! -->   image: ", image)
+                print("stopping for now")
+                break
+            else:
+                print("image recived None.")
+    
         # while True:
             # image_data = self.mainCameraSubscriber.receive()
-        image_data = self.messages
-        print(image_data)
+        # image_data = self.messages
+        # print(image_data)
             # print("we are inside the run function", image_data)
             # if image_data:
             #     print("Looping \n")
