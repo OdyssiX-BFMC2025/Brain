@@ -127,8 +127,8 @@ class LaneDetection:
         print("turning on while loop of lane detection:")
         while True:
             print("debug: message ", self.messages)
-            print("debug: ", self.messages[serialCamera])
-            image = self.messages[serialCamera]["obj"].receive()
+            print("debug: ", self.messages["serialCamera"])
+            image = self.messages["serialCamera"]["obj"].receive()
             
             if image is not None:
                 print("*****image is not None!!! -->   image: ", image)
