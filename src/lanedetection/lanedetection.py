@@ -43,6 +43,7 @@ class LaneDetection:
         for name, cls in classes:
             if name == "serialCamera" and issubclass(cls, Enum):
                 self.messagesAndVals[name] = {"enum": cls, "owner": cls.Owner.value}
+        print("debug : messagesAndVals: ", self.messagesAndVals)
 
     def subscribe(self):
         """Subscribe function. In this function we make all the required subscribe to process gateway"""
@@ -125,6 +126,8 @@ class LaneDetection:
         # checking if we are able to recv images in here from the pipe.
         print("turning on while loop of lane detection:")
         while True:
+            print("debug: message ", self.messages)
+            print("debug: ", self.messages[serialCamera])
             image = self.messages[serialCamera]["obj"].receive()
             
             if image is not None:
