@@ -67,6 +67,7 @@ class threadGateway(ThreadWithStop):
         if not To in self.sendingList[Owner][Id].keys():
             self.sendingList[Owner][Id][To] = Pipe
         self.messageApproved.append((Owner, Id))
+        print("#################   added a subscription to: ", Owner, Id, To, Pipe , " #################")
         # Debugging( you can comment this):
         if self.debugging:
             self.printList()

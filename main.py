@@ -148,7 +148,9 @@ for process in allProcesses:
 
 # ===================================== DEBUG FOR QUEUELIST ===============================
 time.sleep(2)
-print("debig : queueList: ", queueList)
+print('')
+print(" ********* debug : queueList: ", queueList)
+print('')
 # ===================================== STAYING ALIVE ====================================
 blocker = Event()
 try:
