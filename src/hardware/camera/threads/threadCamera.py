@@ -98,6 +98,7 @@ class threadCamera(ThreadWithStop):
         """Callback function for receiving configs on the pipe."""
 
         if self.brightnessSubscriber.isDataInPipe():
+            print("debug: brightnessSubscriber *** well this is subscriber object" , self.brightnessSubscriber)
             message = self.brightnessSubscriber.receive()
             if self.debugger:
                 self.logger.info(str(message))
