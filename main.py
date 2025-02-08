@@ -66,6 +66,7 @@ from src.utils.ipManager.IpReplacement import IPManager
 # ------ New component imports starts here ------#
 from src.hardware.serialhandler.threads.threadWrite import threadWrite
 import serial
+import time
 logFile = open('logfile.log', 'a')
 # ------ New component imports ends here ------#
 # ======================================== SETTING UP ====================================
@@ -145,6 +146,9 @@ for process in allProcesses:
     process.daemon = True
     process.start()
 
+# ===================================== DEBUG FOR QUEUELIST ===============================
+time.sleep(2)
+print("debig : queueList: ", queueList)
 # ===================================== STAYING ALIVE ====================================
 blocker = Event()
 try:

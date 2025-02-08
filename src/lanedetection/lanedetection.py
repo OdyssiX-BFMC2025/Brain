@@ -125,9 +125,9 @@ class LaneDetection:
         """Main loop for processing frames."""
         # checking if we are able to recv images in here from the pipe.
         print("turning on while loop of lane detection:")
+        print("debug: message ", self.messages)
+        print("debug: ", self.messages["serialCamera"])
         while True:
-            print("debug: message ", self.messages)
-            print("debug: ", self.messages["serialCamera"])
             image = self.messages["serialCamera"]["obj"].receive()
             
             if image is not None:
@@ -135,7 +135,8 @@ class LaneDetection:
                 print("stopping for now")
                 break
             else:
-                print("image recived None.")
+                print("image received None.")
+            time.sleep(2)  
     
         # while True:
             # image_data = self.mainCameraSubscriber.receive()
