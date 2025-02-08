@@ -145,7 +145,8 @@ class LaneDetection:
                 break
             else:
                 print("image received None.")
-                print('***** queueList: ', self.queueList)
+                print('***** general queueList: ', self.queueList['General'])
+                print('***** config queueList: ', self.queueList['Config'])
             time.sleep(2)  
     
         # while True:
