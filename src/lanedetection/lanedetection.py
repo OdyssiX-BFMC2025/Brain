@@ -127,10 +127,13 @@ class LaneDetection:
         print("turning on while loop of lane detection:")
         print("debug: message ", self.messages)
         if "serialCamera" in self.messages:
-            print("debug: ", self.messages["serialCamera"])
+            print("debug: subcriber object from lane detection file ", self.messages["serialCamera"]["obj"])
         while True:
             if "serialCamera" in self.messages:
-                image = self.messages["serialCamera"]["obj"].receive()
+                if self.messages["serialCamera"]["obj"].isDataInPipe():
+                    image = self.messages["serialCamera"]["obj"].receive()
+                else:
+                    print("No data in the pipe from lane detection.")
             else:
                 print("Key 'serialCamera' not found in messages. Current keys:", self.messages.keys())
 
