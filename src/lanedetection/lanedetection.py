@@ -10,7 +10,7 @@ from src.utils.messages.allMessages import mainCamera, Record, serialCamera
 import serial
 from enum import Enum
 import time
-from src.hardware.serialhandler.threads.threadWrite import threadWrite
+# from src.hardware.serialhandler.threads.threadWrite import threadWrite
 from src.utils.messages import allMessages
 
 class LaneDetection:
@@ -21,7 +21,7 @@ class LaneDetection:
         # self.logger = logging.getLogger("LaneDetection")
         self.serialCom = serial.Serial("/dev/ttyACM0", 115200, timeout=0.1)
         self.logFile = open('../logfile.log', 'a')
-        tw = threadWrite(self.queueList, self.serialCom, self.logFile, logging)
+        # tw = threadWrite(self.queueList, self.serialCom, self.logFile, logging)
 
         self.messages = {}
         self.messagesAndVals = {}
@@ -48,7 +48,7 @@ class LaneDetection:
     def subscribe(self):
         """Subscribe function. In this function we make all the required subscribe to process gateway"""
         for name, enum in self.messagesAndVals.items():
-            subscriber = messageHandlerSubscriber(self.queueList, enum["enum"], "lastOnly", True)
+            subscriber = messageHandlerSubscriber(self.queueList, enum["enum"], "fifo", True)
             self.messages[name] = {"obj": subscriber}
         print("added a subscribtion to : ", self.messages.keys(), "for lane detection.")
 
@@ -126,9 +126,14 @@ class LaneDetection:
         # checking if we are able to recv images in here from the pipe.
         print("turning on while loop of lane detection:")
         print("debug: message ", self.messages)
-        print("debug: ", self.messages["serialCamera"])
+        if "serialCamera" in self.messages:
+            print("debug: ", self.messages["serialCamera"])
         while True:
-            image = self.messages["serialCamera"]["obj"].receive()
+            if "serialCamera" in self.messages:
+                image = self.messages["serialCamera"]["obj"].receive()
+            else:
+                print("Key 'serialCamera' not found in messages. Current keys:", self.messages.keys())
+
             
             if image is not None:
                 print("*****image is not None!!! -->   image: ", image)
