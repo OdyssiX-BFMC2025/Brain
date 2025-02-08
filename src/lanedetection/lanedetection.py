@@ -132,6 +132,7 @@ class LaneDetection:
             if "serialCamera" in self.messages:
                 if self.messages["serialCamera"]["obj"].isDataInPipe():
                     image = self.messages["serialCamera"]["obj"].receive()
+                    print("debug: image received from lane detection file ", image)
                 else:
                     print("No data in the pipe from lane detection.")
             else:
