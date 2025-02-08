@@ -81,10 +81,10 @@ queueList = {
 
 logging = logging.getLogger()
 
-Dashboard = True
+Dashboard = False
 Camera = True
-Semaphores = True
-TrafficCommunication = True
+Semaphores = False
+TrafficCommunication = False
 SerialHandler = True
 
 # ------ New component flags starts here ------#
@@ -147,7 +147,6 @@ for process in allProcesses:
     process.start()
 
 # ===================================== DEBUG FOR QUEUELIST ===============================
-time.sleep(2)
 print('')
 print(" ********* debug : queueList: ", queueList)
 print('')
