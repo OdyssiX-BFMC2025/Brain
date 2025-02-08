@@ -26,15 +26,15 @@
 # OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 # OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
 
-# if __name__ == "__main__":
-#     import sys
-#     sys.path.insert(0, "../..")
+if __name__ == "__main__":
+    import sys
+    sys.path.insert(0, "../..")
 import sys
-# from src.templates.workerprocess import WorkerProcess
-from ..templates.workerprocess import WorkerProcess
+from src.templates.workerprocess import WorkerProcess
+# from ..templates.workerprocess import WorkerProcess
 
-# from src.gateway.threads.threadGateway import threadGateway
-from ..gateway.threads.threadGateway import threadGateway
+from src.gateway.threads.threadGateway import threadGateway
+# from ..gateway.threads.threadGateway import threadGateway
 
 
 class processGateway(WorkerProcess):
