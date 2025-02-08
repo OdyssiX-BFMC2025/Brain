@@ -130,7 +130,7 @@ class LaneDetection:
             print("debug: ", self.messages["serialCamera"])
         while True:
             if "serialCamera" in self.messages:
-                image = self.messages["serialCamera"]["obj"].recv()
+                image = self.messages["serialCamera"]["obj"].receive()
             else:
                 print("Key 'serialCamera' not found in messages. Current keys:", self.messages.keys())
 
