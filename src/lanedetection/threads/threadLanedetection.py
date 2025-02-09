@@ -136,18 +136,22 @@ class threadLaneDetection(ThreadWithStop):
                 # if self.messages["serialCamera"]["obj"].isDataInPipe():
                 image = self.messages["serialCamera"]["obj"].receive()
                 print("debug: image received from lane detection file ", image)
-                # image_data = base64.b64decode(image)
-                # img = np.frombuffer(image_data, dtype=np.uint8)
-                # image = cv2.imdecode(img, cv2.IMREAD_COLOR)
-                # cv2.imwrite("recv_img.jpg", image)
-                # print("image saved by the name recv_img.jpg")
-                break
                 # else:
                     # print("No data in the pipe from lane detection.")
             else:
                 print("Key 'serialCamera' not found in messages. Current keys:", self.messages.keys())
 
-
+            
+            if image is not None:
+                print("*****image is not None!!! -->   image: ", image)
+                print("stopping for now")
+                break
+            else:
+                print("image received None.")
+                print('***** general queueList: ', self.queueList['General'])
+                print('***** config queueList: ', self.queueList['Config'])
+            time.sleep(2)  
+    
         # while True:
             # image_data = self.mainCameraSubscriber.receive()
         # image_data = self.messages
