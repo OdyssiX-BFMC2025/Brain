@@ -4,10 +4,9 @@ import numpy as np
 import base64
 import logging
 import time
-import psutil, json, logging, inspect, eventlet
+import psutil, json, logging, inspect
 from src.utils.messages.messageHandlerSubscriber import messageHandlerSubscriber
 from src.utils.messages.allMessages import mainCamera, Record, serialCamera
-import serial
 from enum import Enum
 import time
 # from src.hardware.serialhandler.threads.threadWrite import threadWrite
@@ -23,8 +22,8 @@ class threadLaneDetection(ThreadWithStop):
         self.debugger = debug
         self.logger = logger
         # self.logger = logging.getLogger("LaneDetection")
-        self.serialCom = serial.Serial("/dev/ttyACM0", 115200, timeout=0.1)
-        self.logFile = open('../logfile.log', 'a')
+        # self.serialCom = serial.Serial("/dev/ttyACM0", 115200, timeout=0.1)
+        # self.logFile = open('../logfile.log', 'a')
         # tw = threadWrite(self.queueList, self.serialCom, self.logFile, logging)
 
         self.messages = {}
@@ -136,23 +135,19 @@ class threadLaneDetection(ThreadWithStop):
             if "serialCamera" in self.messages:
                 # if self.messages["serialCamera"]["obj"].isDataInPipe():
                 image = self.messages["serialCamera"]["obj"].receive()
-                print("debug: image received from lane detection file ", image)
+                # print("debug: image received from lane detection file ", image)
+                image_data = base64.b64decode(image)
+                img = np.frombuffer(image_data, dtype=np.uint8)
+                image = cv2.imdecode(img, cv2.IMREAD_COLOR)
+                cv2.imwrite("recv_img.jpg", image)
+                print("image saved by the name recv_img.jpg")
+                break
                 # else:
                     # print("No data in the pipe from lane detection.")
             else:
                 print("Key 'serialCamera' not found in messages. Current keys:", self.messages.keys())
 
-            
-            if image is not None:
-                print("*****image is not None!!! -->   image: ", image)
-                print("stopping for now")
-                break
-            else:
-                print("image received None.")
-                print('***** general queueList: ', self.queueList['General'])
-                print('***** config queueList: ', self.queueList['Config'])
-            time.sleep(2)  
-    
+
         # while True:
             # image_data = self.mainCameraSubscriber.receive()
         # image_data = self.messages
