@@ -135,7 +135,7 @@ if AutoStart:
     command_sender.send_commands_continuously(queueList, logFile, logging)
 
 if autolane:
-    processLaneDetection = processLaneDetection(queueList, logging, debug = False)
+    processLaneDetection = processLaneDetection(queueList, logging, debugging = False)
     allProcesses.append(processLaneDetection)
     
 # ------ New component runs ends here ------#
