@@ -130,21 +130,22 @@ class threadCamera(ThreadWithStop):
         print("************************************************************************************************************************")
         while self._running:
             try:
-                recordRecv = self.recordSubscriber.receive()
-                if recordRecv is not None: 
-                    self.recording = bool(recordRecv)
-                    if recordRecv == False:
-                        self.video_writer.release()
-                    else:
-                        fourcc = cv2.VideoWriter_fourcc(
-                            *"XVID"
-                        )  # You can choose different codecs, e.g., 'MJPG', 'XVID', 'H264', etc.
-                        self.video_writer = cv2.VideoWriter(
-                            "output_video" + str(time.time()) + ".avi",
-                            fourcc,
-                            self.frame_rate,
-                            (2048, 1080),
-                        )
+                if self.recording == True:  # If the recording flag is True, then we will start recording -- added my us
+                    recordRecv = self.recordSubscriber.receive()
+                    if recordRecv is not None: 
+                        self.recording = bool(recordRecv)
+                        if recordRecv == False:
+                            self.video_writer.release()
+                        else:
+                            fourcc = cv2.VideoWriter_fourcc(
+                                *"XVID"
+                            )  # You can choose different codecs, e.g., 'MJPG', 'XVID', 'H264', etc.
+                            self.video_writer = cv2.VideoWriter(
+                                "output_video" + str(time.time()) + ".avi",
+                                fourcc,
+                                self.frame_rate,
+                                (2048, 1080),
+                            )
 
             except Exception as e:
                 print(e)
