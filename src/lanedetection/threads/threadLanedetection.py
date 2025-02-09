@@ -135,7 +135,7 @@ class threadLaneDetection(ThreadWithStop):
             if "serialCamera" in self.messages:
                 # if self.messages["serialCamera"]["obj"].isDataInPipe():
                 image = self.messages["serialCamera"]["obj"].receive()
-                # print("debug: image received from lane detection file ", image)
+                print("debug: image received from lane detection file ", image)
                 image_data = base64.b64decode(image)
                 img = np.frombuffer(image_data, dtype=np.uint8)
                 image = cv2.imdecode(img, cv2.IMREAD_COLOR)
