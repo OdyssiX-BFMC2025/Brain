@@ -135,9 +135,8 @@ if AutoStart:
     command_sender.send_commands_continuously(queueList, logFile, logging)
 
 if autolane:
-    lanedetection = LaneDetection(queueList, logging, debug = False)
-    print("setting lanedetection to run")
-    lanedetection.run()
+    LaneDetection = LaneDetection(queueList, logging, debug = False)
+    allProcesses.append(LaneDetection)
     
 # ------ New component runs ends here ------#
 
