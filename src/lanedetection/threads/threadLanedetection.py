@@ -14,10 +14,11 @@ import time
 from src.utils.messages import allMessages
 from src.templates.threadwithstop import ThreadWithStop
 
-class LaneDetection(ThreadWithStop):
+class threadLaneDetection(ThreadWithStop):
     """Thread which detects lane."""
 
     def __init__(self, queueList, logger, debug=False):
+        super(threadLaneDetection, self).__init__()
         self.queueList = queueList
         self.debugger = debug
         self.logger = logger
@@ -210,8 +211,8 @@ class LaneDetection(ThreadWithStop):
 
     # =============================== START ===============================================
     def start(self):
-        super(LaneDetection, self).start()
+        super(threadLaneDetection, self).start()
 
     # =============================== STOP ================================================
     def stop(self):
-        super(LaneDetection, self).stop()
+        super(threadLaneDetection, self).stop()

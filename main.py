@@ -44,7 +44,7 @@ import sys
 import subprocess
 
 import command_sender
-from src.lanedetection.lanedetection import LaneDetection
+from src.lanedetection.processLanedetection import processLaneDetection
 
 
 
@@ -135,8 +135,8 @@ if AutoStart:
     command_sender.send_commands_continuously(queueList, logFile, logging)
 
 if autolane:
-    LaneDetection = LaneDetection(queueList, logging, debug = False)
-    allProcesses.append(LaneDetection)
+    processLaneDetection = processLaneDetection(queueList, logging, debug = False)
+    allProcesses.append(processLaneDetection)
     
 # ------ New component runs ends here ------#
 
