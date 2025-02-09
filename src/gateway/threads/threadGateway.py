@@ -106,8 +106,6 @@ class threadGateway(ThreadWithStop):
             for element in self.sendingList[Owner][Id]:
                 # We send a dictionary that contain the type of the message and message
                 # add a debug message to check if there is a message sent to the pipe of lane dectection reciever.
-                
-                print(f"sedning data to {message['To']['receiver']} pipe -- data ", {"Type": Type, "value": Value, "id": Id, "Owner": Owner})
                 self.sendingList[Owner][Id][element].send(
                     {"Type": Type, "value": Value, "id": Id, "Owner": Owner}
                 )
