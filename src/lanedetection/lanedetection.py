@@ -12,8 +12,11 @@ from enum import Enum
 import time
 # from src.hardware.serialhandler.threads.threadWrite import threadWrite
 from src.utils.messages import allMessages
+from src.templates.threadwithstop import ThreadWithStop
 
-class LaneDetection:
+class LaneDetection(ThreadWithStop):
+    """Thread which detects lane."""
+
     def __init__(self, queueList, logger, debug=False):
         self.queueList = queueList
         self.debugger = debug
@@ -128,7 +131,7 @@ class LaneDetection:
         print("debug: message ", self.messages)
         if "serialCamera" in self.messages:
             print("debug: subcriber object from lane detection file ", self.messages["serialCamera"]["obj"])
-        while True:
+        while self._running:
             if "serialCamera" in self.messages:
                 # if self.messages["serialCamera"]["obj"].isDataInPipe():
                 image = self.messages["serialCamera"]["obj"].receive()
@@ -204,3 +207,11 @@ class LaneDetection:
             #     print("No new image data received.")
             #     self.logger.info("No new image data received.")
             #     time.sleep(0.1)
+
+    # =============================== START ===============================================
+    def start(self):
+        super(LaneDetection, self).start()
+
+    # =============================== STOP ================================================
+    def stop(self):
+        super(LaneDetection, self).stop()
