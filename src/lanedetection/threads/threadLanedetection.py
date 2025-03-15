@@ -268,8 +268,8 @@ class threadLaneDetection(ThreadWithStop):
 
         new_steering_angle = self.compute_steering_angle(frame, lane_lines)
         self.curr_steering_angle = self.stabilize_steering_angle(self.curr_steering_angle, new_steering_angle, len(lane_lines))
-        
-        print('take a turn of: ', self.curr_steering_angle, ' degrees')
+        final_turn = self.curr_steering_angle - 90
+        print('take a turn of: ', self.curr_steering_angle - 90, ' degrees', 'right' if final_turn > 0 else 'left')
         '''
         logic for car control based on steer angle.
         '''
