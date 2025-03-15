@@ -173,6 +173,7 @@ class threadCamera(ThreadWithStop):
 
                 self.mainCameraSender.send(mainEncodedImageData)
                 self.serialCameraSender.send(serialEncodedImageData)
+                # print("sending***********************************")
 
             send = not send
 
