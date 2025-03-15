@@ -265,7 +265,7 @@ class threadLaneDetection(ThreadWithStop):
     def run(self):
         """Main loop for processing frames."""
         # checking if we are able to recv images in here from the pipe.
-        print("turning on while loop of lane detection:")
+        # print("turning on while loop of lane detection:")
         print("debug: message ", self.messages)
         if "serialCamera" in self.messages:
             print("debug: subcriber object from lane detection file ", self.messages["serialCamera"]["obj"])
