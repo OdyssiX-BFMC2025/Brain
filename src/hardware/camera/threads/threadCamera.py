@@ -30,7 +30,7 @@ import cv2
 import threading
 import base64
 import picamera2
-from picamera2.previews import NullPreview  #testing other previews 
+# from picamera2.previews import NullPreview  #testing other previews 
 
 import time
 
@@ -195,5 +195,5 @@ class threadCamera(ThreadWithStop):
             encode="lores",
         )
         self.camera.configure(config)
-        self.preview = NullPreview(self.camera)  # Use NullPreview
+        # self.preview = NullPreview(self.camera)  # Use NullPreview
         self.camera.start()
