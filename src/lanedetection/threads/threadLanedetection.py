@@ -278,7 +278,7 @@ class threadLaneDetection(ThreadWithStop):
             image_data = base64.b64decode(image)
             img = np.frombuffer(image_data, dtype=np.uint8)
             image = cv2.imdecode(img, cv2.IMREAD_COLOR)
-            lane_lines, frame = self.detect_lane(frame)
+            lane_lines, frame = self.detect_lane(image)
             self.steer(frame, lane_lines)
 
             
