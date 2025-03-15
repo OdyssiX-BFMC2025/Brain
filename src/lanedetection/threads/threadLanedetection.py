@@ -284,7 +284,7 @@ class threadLaneDetection(ThreadWithStop):
         while self._running:
             image = self.messages["serialCamera"]["obj"].receive()
             if image is None:
-                print("No image received.")
+                print("No image received in lane detection file.")
                 continue
             
             image_data = base64.b64decode(image)

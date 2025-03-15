@@ -1,7 +1,11 @@
+from ultralytics import YOLO
 from src.templates.threadwithstop import ThreadWithStop
 from src.utils.messages.allMessages import (mainCamera)
 from src.utils.messages.messageHandlerSubscriber import messageHandlerSubscriber
 from src.utils.messages.messageHandlerSender import messageHandlerSender
+import inspect
+from src.utils.messages import allMessages
+from enum import Enum
 class threadobjectdetection(ThreadWithStop):
     """This thread handles objectdetection.
     Args:
@@ -11,16 +15,43 @@ class threadobjectdetection(ThreadWithStop):
     """
 
     def __init__(self, queueList, logging, debugging=False):
+        super(threadobjectdetection, self).__init__()
         self.queuesList = queueList
         self.logging = logging
         self.debugging = debugging
+        self.messages = {}
+        self.messagesAndVals = {}
+
+        self.getNamesAndVals()
         self.subscribe()
-        super(threadobjectdetection, self).__init__()
+        self.model = YOLO("yolov8n.pt") 
+
+    def getNamesAndVals(self):
+        """Extract all message names and values for processing."""
+        classes = inspect.getmembers(allMessages, inspect.isclass)
+        for name, cls in classes:
+            if name == "serialCamera" and issubclass(cls, Enum):
+                self.messagesAndVals[name] = {"enum": cls, "owner": cls.Owner.value}
+        print("debug : messagesAndVals: ", self.messagesAndVals)
+
+    # subsciber function to recv images from the camera/serialCamera
+    def subscribe(self):
+        """Subscribe function. In this function we make all the required subscribe to process gateway"""
+        for name, enum in self.messagesAndVals.items():
+            subscriber = messageHandlerSubscriber(self.queueList, enum["enum"], "fifo", True)
+            self.messages[name] = {"obj": subscriber}
+        print("added a subscribtion to : ", self.messages.keys(), "for object detection.")
+
 
     def run(self):
         while self._running:
-            pass
+            image = self.messages["serialCamera"]["obj"].receive()
+            if image is None:
+                print("No image received in object detection file.")
+                continue
+            results = self.model.predict(image, stream=True, conf=0.6, imgsz=480)  # Lower resolution + streaming API
+            for r in results:
+                print(r.names)
 
-    def subscribe(self):
-        """Subscribes to the messages you are interested in"""
-        pass
+
+

@@ -45,6 +45,7 @@ import subprocess
 
 import command_sender
 from src.lanedetection.processLanedetection import processLaneDetection
+from src.objectdetection.objectdetection import processobjectdetection
 
 
 
@@ -89,7 +90,8 @@ SerialHandler = False
 
 # ------ New component flags starts here ------#
 AutoStart = False
-autolane = True
+autolane = False
+objectdetection = True
 # ------ New component flags ends here ------#
 
 # ===================================== SETUP PROCESSES ==================================
@@ -137,7 +139,10 @@ if AutoStart:
 if autolane:
     processLaneDetection = processLaneDetection(queueList, logging, debugging = False)
     allProcesses.append(processLaneDetection)
-    
+
+if objectdetection:
+    processobjectdetection = processobjectdetection(queueList, logging, debugging = False)
+    allProcesses.append(processobjectdetection)
 # ------ New component runs ends here ------#
 
 # ===================================== START PROCESSES ==================================
