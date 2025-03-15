@@ -292,7 +292,7 @@ class threadLaneDetection(ThreadWithStop):
             image = cv2.imdecode(img, cv2.IMREAD_COLOR)
             lane_lines, frame = self.detect_lane(image)
             self.steer(frame, lane_lines)
-
+            time.sleep(1)
             
         # while True:
             # image_data = self.mainCameraSubscriber.receive()
