@@ -21,6 +21,7 @@ class threadLaneDetection(ThreadWithStop):
         self.queueList = queueList
         self.debugger = debug
         self.logger = logger
+        self.curr_steering_angle = 90
         # self.logger = logging.getLogger("LaneDetection")
         # self.serialCom = serial.Serial("/dev/ttyACM0", 115200, timeout=0.1)
         # self.logFile = open('../logfile.log', 'a')
