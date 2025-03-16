@@ -16,7 +16,7 @@ class threadobjectdetection(ThreadWithStop):
 
     def __init__(self, queueList, logging, debugging=False):
         super(threadobjectdetection, self).__init__()
-        self.queuesList = queueList
+        self.queueList = queueList
         self.logging = logging
         self.debugging = debugging
         self.messages = {}
