@@ -1,4 +1,5 @@
 import base64
+import time
 import cv2
 import numpy as np
 from ultralytics import YOLO
@@ -64,6 +65,5 @@ class threadobjectdetection(ThreadWithStop):
             for r in results:
                 print("printing names of object*****")
                 print(r.names)
-
-
+            time.sleep(3)
 
