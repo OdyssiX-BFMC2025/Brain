@@ -55,6 +55,7 @@ class threadobjectdetection(ThreadWithStop):
     def run(self):
         print("object detection started*****************")
         while self._running:
+            time.sleep(3)
             image = self.messages["serialCamera"]["obj"].receive()
             if image is None:
                 print("No image received in object detection file.")
@@ -65,5 +66,4 @@ class threadobjectdetection(ThreadWithStop):
             for r in results:
                 print("printing names of object*****")
                 print(r.names)
-            time.sleep(3)
 
