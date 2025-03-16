@@ -45,7 +45,7 @@ import subprocess
 
 import command_sender
 from src.lanedetection.processLanedetection import processLaneDetection
-from src.objectdetection.objectdetection import processobjectdetection
+from src.objectdetection.processobjectdetection import processobjectdetection
 
 
 

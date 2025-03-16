@@ -3,7 +3,7 @@ if __name__ == "__main__":
     sys.path.insert(0, "../../..")
 
 from src.templates.workerprocess import WorkerProcess
-from src.objectdetection.objectdetection.threads.threadobjectdetection import threadobjectdetection
+from src.objectdetection.threads.threadobjectdetection import threadobjectdetection
 
 class processobjectdetection(WorkerProcess):
     """This process handles objectdetection.
