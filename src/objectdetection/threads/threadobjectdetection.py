@@ -1,3 +1,6 @@
+import base64
+import cv2
+import numpy as np
 from ultralytics import YOLO
 from src.templates.threadwithstop import ThreadWithStop
 from src.utils.messages.allMessages import (mainCamera)
@@ -41,7 +44,12 @@ class threadobjectdetection(ThreadWithStop):
             subscriber = messageHandlerSubscriber(self.queueList, enum["enum"], "fifo", True)
             self.messages[name] = {"obj": subscriber}
         print("added a subscribtion to : ", self.messages.keys(), "for object detection.")
-
+    
+    def decode_image(self, encoded_image):
+        """Decodes a base64-encoded image."""
+        decoded_bytes = base64.b64decode(encoded_image)
+        np_array = np.frombuffer(decoded_bytes, np.uint8)
+        return cv2.imdecode(np_array, cv2.IMREAD_COLOR)
 
     def run(self):
         print("object detection started*****************")
@@ -50,7 +58,9 @@ class threadobjectdetection(ThreadWithStop):
             if image is None:
                 print("No image received in object detection file.")
                 continue
-            results = self.model.predict(image, stream=True, conf=0.6, imgsz=480)  # Lower resolution + streaming API
+            frame = self.decode_image(image)
+            
+            results = self.model.predict(frame, stream=True, conf=0.6, imgsz=480)  # Lower resolution + streaming API
             for r in results:
                 print("printing names of object*****")
                 print(r.names)
