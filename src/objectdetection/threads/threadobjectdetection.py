@@ -42,7 +42,7 @@ class threadobjectdetection(ThreadWithStop):
     def subscribe(self):
         """Subscribe function. In this function we make all the required subscribe to process gateway"""
         for name, enum in self.messagesAndVals.items():
-            subscriber = messageHandlerSubscriber(self.queueList, enum["enum"], "fifo", True)
+            subscriber = messageHandlerSubscriber(self.queueList, enum["enum"], "lastonly", True)
             self.messages[name] = {"obj": subscriber}
         print("added a subscribtion to : ", self.messages.keys(), "for object detection.")
     
