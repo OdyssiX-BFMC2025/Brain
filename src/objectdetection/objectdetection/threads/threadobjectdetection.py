@@ -44,6 +44,7 @@ class threadobjectdetection(ThreadWithStop):
 
 
     def run(self):
+        print("object detection started*****************")
         while self._running:
             image = self.messages["serialCamera"]["obj"].receive()
             if image is None:
@@ -51,6 +52,7 @@ class threadobjectdetection(ThreadWithStop):
                 continue
             results = self.model.predict(image, stream=True, conf=0.6, imgsz=480)  # Lower resolution + streaming API
             for r in results:
+                print("printing names of object*****")
                 print(r.names)
 
 
