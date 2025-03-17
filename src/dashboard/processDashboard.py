@@ -171,14 +171,14 @@ class processDashboard(WorkerProcess):
             self.logger.info("Received save message: " + data)
 
         dataDict = json.loads(data)
-        file_path = '/home/jesus/Brain/src/utils/table_state.json'  # change as necessary
+        file_path = '/home/jesus/Brain/Brain/src/utils/table_state.json'  # change as necessary
 
         with open(file_path, 'w') as json_file:
             json.dump(dataDict, json_file, indent=4)
 
     def handleLoadTableState(self, data):
         """Handle loading the table state from a JSON file."""
-        file_path = '/home/jesus/Brain/src/utils/table_state.json'  # change as necessary (jesus)
+        file_path = '/home/jesus/Brain/Brain/src/utils/table_state.json'  # change as necessary (jesus)
 
         try:
             with open(file_path, 'r') as json_file:

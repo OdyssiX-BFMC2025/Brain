@@ -6,3 +6,4 @@ __pycache__
 /my_env/
 req.txt
 /yolov5
+/yolov8n.pt

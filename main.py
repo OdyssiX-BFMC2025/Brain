@@ -82,7 +82,7 @@ queueList = {
 
 logging = logging.getLogger()
 
-Dashboard = False
+Dashboard = True
 Camera = True
 Semaphores = False
 TrafficCommunication = False
@@ -91,7 +91,7 @@ SerialHandler = False
 # ------ New component flags starts here ------#
 AutoStart = False
 autolane = False
-objectdetection = True
+objectdetection = False
 # ------ New component flags ends here ------#
 
 # ===================================== SETUP PROCESSES ==================================
