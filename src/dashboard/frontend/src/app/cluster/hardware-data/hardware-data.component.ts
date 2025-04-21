@@ -29,7 +29,9 @@
 import { Component } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { WebSocketService} from '../../webSocket/web-socket.service'
-import { IndicatorComponent } from './indicator/indicator.component';
+import { 
+
+ } from './indicator/indicator.component';
 
 @Component({
   selector: 'app-hardware-data',
