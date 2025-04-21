@@ -60,10 +60,10 @@ class messageHandlerSubscriber:
         Returns None if there no data in the Pipe
         """
         if not self._pipeRecv.poll():
-            print("WARNING! No data in the pipe.", self._message, self._receiver)
+            #print("WARNING! No data in the pipe.", self._message, self._receiver)
             return None
         else:
-            print("WARNING! Data in the pipe.", self._message, self._receiver)
+            #print("WARNING! Data in the pipe.", self._message, self._receiver)
             return self.receiveWithBlock()
         
     def receiveWithBlock(self):
@@ -79,7 +79,8 @@ class messageHandlerSubscriber:
         
         if self._deliveryMode == "fifo":
             if messageType != self._message.msgType.value:
-                print("WARNING! Message type and value type are not matching.", self._message, "received:", messageType, "expected:", self._message.msgType.value)
+#                print("WARNING! Message type and value type are not matching.", self._message, "received:", messageType, "expected:", self._message.msgType.value)
+                 pass
             return message["value"]
         
         elif self._deliveryMode == "lastonly":
@@ -87,7 +88,8 @@ class messageHandlerSubscriber:
                 message = self._pipeRecv.recv()
 
             if messageType != self._message.msgType.value:
-                print("WARNING! Message type and value type are not matching.", self._message, "received:", messageType, "expected:", self._message.msgType.value)
+#                print("WARNING! Message type and value type are not matching.", self._message, "received:", messageType, "expected:", self._message.msgType.value)
+                 pass
             return message["value"]
         
     def empty(self):
