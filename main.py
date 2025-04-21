@@ -48,7 +48,7 @@ SerialHandler = False
 
 AutoStart = False
 autolane = False
-objectdetection = False
+objectdetection = True
 # ------ New component flags ends here ------#
 
 # ===================================== SETUP PROCESSES ==================================
