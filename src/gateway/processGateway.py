@@ -1,37 +1,11 @@
-# Copyright (c) 2019, Bosch Engineering Center Cluj and BFMC organizers
-# All rights reserved.
-
-# Redistribution and use in source and binary forms, with or without
-# modification, are permitted provided that the following conditions are met:
-
-# 1. Redistributions of source code must retain the above copyright notice, this
-#    list of conditions and the following disclaimer.
-
-# 2. Redistributions in binary form must reproduce the above copyright notice,
-#    this list of conditions and the following disclaimer in the documentation
-#    and/or other materials provided with the distribution.
-
-# 3. Neither the name of the copyright holder nor the names of its
-#    contributors may be used to endorse or promote products derived Owner
-#    this software without specific prior written permission.
-
-# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-# AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-# IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-# DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-# FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-# DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-# SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-# CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-# OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE
-
+#Process that handles the data distribution to the threads.
 if __name__ == "__main__":
     import sys
-    sys.path.insert(0, "../..")
+    import os
+    sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../..")))
 import sys
 from src.templates.workerprocess import WorkerProcess
-# from ..templates.workerprocess import WorkerProcess
+# from ..templates.workerprocess import WorkerProcess``
 
 from src.gateway.threads.threadGateway import threadGateway
 # from ..gateway.threads.threadGateway import threadGateway
@@ -97,6 +71,7 @@ if __name__ == "__main__":
     )
     time.sleep(1)
 
+
     pipeReceive2, pipeSend2 = Pipe()
     queueList["Config"].put(
         {
@@ -107,6 +82,7 @@ if __name__ == "__main__":
         }
     )
     time.sleep(1)
+
 
     pipeReceive3, pipeSend3 = Pipe()
     queueList["Config"].put(
@@ -119,39 +95,115 @@ if __name__ == "__main__":
     )
     time.sleep(1)
 
-    queueList["Critical"].put(
-        {
-            "Owner": "Camera",
-            "msgID": 1,
-            "msgType": "1111",
-            "msgValue": "This is the text1",
-        }
-    )
+    print("all config messages sent.")
 
-    queueList["Warning"].put(
-        {
-            "Owner": "Camera",
-            "msgID": 3,
-            "msgType": "1111",
-            "msgValue": "This is the text3",
-        }
-    )
+    
+    # # Record the start time before sending messages
+    # start_time_critical = time.time()
+    # queueList["Critical"].put(
+    #     {
+    #         "Owner": "Camera",
+    #         "msgID": 1,
+    #         "msgType": "1111",
+    #         "msgValue": "This is the text1",
+    #     }
+    # )
+    # start_time_warning = time.time()
+    # queueList["Warning"].put(
+    #     {
+    #         "Owner": "Camera",
+    #         "msgID": 3,
+    #         "msgType": "1111",
+    #         "msgValue": "This is the text3",
+    #     }
+    # )
+    # start_time_general = time.time()
+    # queueList["General"].put(
+    #     {
+    #         "Owner": "Camera",
+    #         "msgID": 2,
+    #         "msgType": "1111",
+    #         "msgValue": "This is the text2",
+    #     }
+    # )
+    # print("all messages sent.")
 
-    queueList["General"].put(
-        {
-            "Owner": "Camera",
-            "msgID": 2,
-            "msgType": "1111",
-            "msgValue": "This is the text2",
-        }
-    )
-    time.sleep(2)
+    # # Measure the time taken for each message to be received
+    # message_1 = pipeReceive1.recv()
+    # latency_critical = time.time() - start_time_critical
+    # print("message 1 received:", message_1, "latency:", latency_critical, "seconds")
 
-    # Code to verify that the function send Owner threadGateway.py is working properly.
+    # message_2 = pipeReceive2.recv()
+    # latency_general = time.time() - start_time_general
+    # print("message 2 received:", message_2, "latency:", latency_general, "seconds")
 
-    print(pipeReceive3.recv())
-    print(pipeReceive1.recv())
-    print(pipeReceive2.recv())
+    # message_3 = pipeReceive3.recv()
+    # latency_warning = time.time() - start_time_warning
+    # print("message 3 received:", message_3, "latency:", latency_warning, "seconds")
+
+    # Sending 10,000 messages and measuring latency
+    num_messages = 10
+    start_times = {"Critical": [], "Warning": [], "General": []}
+    latencies = {"Critical": [], "Warning": [], "General": []}
+
+    for i in range(num_messages):
+        # Record start time and send messages to each queue
+        start_times["Critical"].append(time.time())
+        queueList["Critical"].put(
+            {
+                "Owner": "Camera",
+                "msgID": 1,
+                "msgType": "1111",
+                "msgValue": f"This is critical message {i + 1}",
+            }
+        )
+
+        start_times["Warning"].append(time.time())
+        queueList["Warning"].put(
+            {
+                "Owner": "Camera",
+                "msgID": 2,
+                "msgType": "1111",
+                "msgValue": f"This is warning message {i + 1}",
+            }
+        )
+
+        start_times["General"].append(time.time())
+        queueList["General"].put(
+            {
+                "Owner": "Camera",
+                "msgID": 3,
+                "msgType": "1111",
+                "msgValue": f"This is general message {i + 1}",
+            }
+        )
+
+    print(f"All {num_messages} messages sent.")
+
+    for i in range(num_messages):
+        # Receive messages and calculate latency for each queue
+        message_critical = pipeReceive1.recv()
+        latency_critical = time.time() - start_times["Critical"][i]
+        latencies["Critical"].append(latency_critical)
+
+        message_warning = pipeReceive2.recv()
+        latency_warning = time.time() - start_times["Warning"][i]
+        latencies["Warning"].append(latency_warning)
+
+        message_general = pipeReceive3.recv()
+        latency_general = time.time() - start_times["General"][i]
+        latencies["General"].append(latency_general)
+
+    print(f"All {num_messages} messages received.")
+
+    # Calculate and display average latency for each queue
+    avg_latency_critical = sum(latencies["Critical"]) / num_messages
+    avg_latency_warning = sum(latencies["Warning"]) / num_messages
+    avg_latency_general = sum(latencies["General"]) / num_messages
+
+    print(f"Average latency for Critical messages: {avg_latency_critical:.6f} seconds")
+    print(f"Average latency for Warning messages: {avg_latency_warning:.6f} seconds")
+    print(f"Average latency for General messages: {avg_latency_general:.6f} seconds")
 
     # ===================================== STAYING ALIVE ====================================
 

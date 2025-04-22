@@ -28,7 +28,7 @@ class threadobjectdetection(ThreadWithStop):
 
         self.getNamesAndVals()
         self.subscribe()
-        self.model = YOLO("yolov5nu.pt")
+        self.model = YOLO("yolov8n.pt") 
 
     def getNamesAndVals(self):
         """Extract all message names and values for processing."""
@@ -61,8 +61,9 @@ class threadobjectdetection(ThreadWithStop):
                 print("No image received in object detection file.")
                 continue
             frame = self.decode_image(image)
-#            print(image)
+            print(image)
             results = self.model.predict(frame, stream=True, conf=0.6, imgsz=480)  # Lower resolution + streaming API
             for r in results:
                 print("printing names of object*****")
+                print(r.names)
 
